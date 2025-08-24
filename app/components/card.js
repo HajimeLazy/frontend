@@ -37,7 +37,7 @@ export default function EndfieldProfileCard() {
         <div className="hero">
           <Image
             src="/images/sliders/SCHALE.jpg"
-            alt="Endministrator"
+            alt="S.C.H.A.L.E"
             fill
             priority
             sizes="(max-width: 1200px) 50vw, 600px"
@@ -73,7 +73,7 @@ export default function EndfieldProfileCard() {
         .group{ display:flex; align-items:center; gap:10px; }
         .label{
           font-size:12px; letter-spacing:.18em; color:#222; background:#fffbe6;
-          border:1px solid #e8d66b; padding:4px 10px; border-radius:999px; font-weight:800;
+          border:1px solid #02D3FB; padding:4px 10px; border-radius:999px; font-weight:800;
         }
         .pill{
           border:1px solid var(--g); padding:4px 10px; border-radius:999px;

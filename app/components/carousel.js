@@ -6,24 +6,31 @@ export default function EndfieldCarousel() {
   const slides = useMemo(() => ([
     {
       id: 1,
-      title: 'Arknights: Endfield - Gameplay Trailer | gamescom 2025',
+      title: '1st Anniversary Animation PV',
       kind: 'video',
-      video: 'https://www.youtube.com/embed/gDXP3Jr02BA?si=XLeMYoBlbcUPut-u',
-      thumb: '/images/sliders/hq720.jpg',
+      video: 'https://www.youtube.com/embed/bmdJQvpkQZY?si=Bw-jbfryomW9-SWl',
+      thumb: '/images/sliders/1st.jpg',
     },
     {
       id: 2,
-      title: 'Arknights: Endfield Gameplay Demo 03',
+      title: 'Blue Archive 2nd PV',
       kind: 'video',
-      video: 'https://www.youtube.com/embed/UbMmSdOJ1Ho?si=XJ18XBhIQisyAhhg',
-      thumb: '/images/sliders/pv_cover_7_en_us.jpg',
+      video: 'https://www.youtube.com/embed/cE1ePjq5ZSs?si=tfm2tFYc_ng-eCCL',
+      thumb: '/images/sliders/2ed.jpg',
     },
     {
       id: 3,
+      title: 'Blue Archive 4nd PV',
+      kind: 'video',
+      video: 'https://www.youtube.com/embed/yZa5abuIKT4?si=rYk7x5uAtQuCEEiu',
+      thumb: '/images/sliders/4th.jpg',
+    },
+    {
+      id: 4,
       title: 'Arknights: Endfield Special Trailer | Endfield: Those Who Stayed',
       kind: 'video',
-      video: 'https://www.youtube.com/embed/H-rls7leIX8?si=KTLy1AYw_eiRZbl1',
-      thumb: '/images/sliders/pv_cover_8_en_us_b9ySzeGjuKfQbSOl.png',
+      video: 'https://www.youtube.com/embed/wZd18g3UshI?si=RqdSnNbWh8hTrbdR',
+      thumb: '/images/sliders/5th.jpg',
     },
   ]), []);
 

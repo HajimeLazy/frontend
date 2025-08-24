@@ -50,7 +50,7 @@ export default function Home() {
           preload="metadata"
           poster="/images/endfield/hero-poster.jpg"
         >
-          <source src="/video/Arknights Endfield Beta Test Trailer - Arknights Endfield (1080p, h264).mp4" type="video/mp4" />
+          <source src="/video/[Blue Archive] Official Promotion Video.mp4" type="video/mp4" />
         </video>
 
         {/* โครงพื้น + ท็อปเฟดกันกลืนกับ navbar */}
