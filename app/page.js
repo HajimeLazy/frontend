@@ -56,8 +56,7 @@ export default function Home() {
         {/* โครงพื้น + ท็อปเฟดกันกลืนกับ navbar */}
         <div className="ef-hero-overlay" aria-hidden />
         <div className="ef-hero-topfade" aria-hidden />
-        {/* เส้น scanline บาง ๆ เพิ่มมิติ (ไม่ใช้สีเหลืองทึบ) */}
-        <div className="ef-hero-scanline" aria-hidden />
+
 
         {/* ไม่มีปุ่ม/เม็ดเหลืองกลางจออีกต่อไป */}
         <div className="ef-hero-center" />

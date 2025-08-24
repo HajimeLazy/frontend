@@ -77,11 +77,14 @@ export default function Navigation() {
     { name: "Service", href: "/service" },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
-    { name: "เข้าสู่ระบบ", href: "/login" },
+    { name: "เข้าสู่ระบบ", href: "/login" }, // เรนเดอร์เสมอ แต่ค่อยซ่อนหลัง mount ถ้า authed
   ];
 
+  // ✅ JS ล้วน ไม่มี type
   const isActiveLink = (href) =>
     pathname === href || (href !== "/" && pathname?.startsWith(href));
+
+  const hideLogin = mounted && authed; // ซ่อน login หลัง mount ถ้า authed
 
   return (
     <nav
@@ -91,7 +94,7 @@ export default function Navigation() {
     >
       <div className="container ef-inner">
         <Link className="navbar-brand ef-brand" href="/" aria-label="Home">
-          <span>Blue Archrive</span>
+          <span>Blue Archive</span>
         </Link>
 
         <button
@@ -115,7 +118,11 @@ export default function Navigation() {
               const active = isActiveLink(item.href);
               const isLogin = item.href === "/login";
               return (
-                <li className="nav-item" key={item.name}>
+                <li
+                  className="nav-item"
+                  key={item.name}
+                  data-hide={isLogin && hideLogin ? "1" : "0"} // hydration-safe hide
+                >
                   <Link
                     className={`nav-link ef-link ${active ? "active" : ""}`}
                     href={item.href}
@@ -149,28 +156,24 @@ export default function Navigation() {
       </div>
 
       <style jsx>{`
-        /* ลิงก์เมนู */
+        /* ซ่อนรายการเมนูด้วย data-hide แบบไม่ทำให้ hydration mismatch */
+        .nav-item[data-hide="1"] {
+          display: none !important;
+        }
+
         .ef-link {
           transition: color 0.25s ease, border-bottom 0.25s ease;
         }
-
-        /* active link */
         .ef-link.active {
           color: #02d3fb !important;
           border-bottom: 2px solid #02d3fb !important;
         }
-
-        /* hover */
         .ef-link:hover {
           color: #02d3fb !important;
         }
-
-        /* navbar glow */
         .ak-topglow {
           box-shadow: 0 2px 10px rgba(2, 211, 251, 0.4);
         }
-
-        /* ปุ่มออกจากระบบ */
         .btn-outline-ink {
           border-color: #02d3fb;
           color: #02d3fb;
