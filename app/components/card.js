@@ -46,7 +46,7 @@ export default function EndfieldProfileCard() {
       <div className="right">
         <div className="hero">
           <Image
-            src="/images/endfield/profile-hero.png"
+            src="/images/sliders/Endministrator.webp"
             alt="Endministrator"
             fill
             priority
@@ -121,7 +121,7 @@ export default function EndfieldProfileCard() {
 }
 
 const MINIS = [
-  { t:'01 / Endministrator', img:'/images/endfield/profile-01.jpg' },
-  { t:'02 / Perlica',         img:'/images/endfield/profile-02.jpg' },
-  { t:'03 / Module',          img:'/images/endfield/profile-03.jpg' },
+  { t:'01 / Endministrator', img:'/images/sliders/Endministrator.webp' },
+  { t:'02 / Endministrator',         img:'/images/sliders/41903-2128533063.png' },
+  { t:'03 /perlica',          img:'/images/sliders/perlica-assets-info-from-website-v0-6omzyh2vfaxb1.webp' },
 ];

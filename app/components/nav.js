@@ -30,6 +30,20 @@ export default function Navigation() {
     };
   }, []);
 
+  // เติมคลาสพร้อมเล่นแอนิเมชันตอน mount + ย่อบาร์เวลาเลื่อน
+  useEffect(() => {
+    const nav = document.querySelector('.ef-nav');
+    nav?.classList.add('ef-ready');
+    const onScroll = () => {
+      if (!nav) return;
+      if (window.scrollY > 10) nav.classList.add('ef-shrink');
+      else nav.classList.remove('ef-shrink');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleSignOut = async () => {
     const res = await Swal.fire({
       title: 'ออกจากระบบ?',
@@ -77,10 +91,10 @@ export default function Navigation() {
       <div className="container ef-inner">
         {/* โลโก้ (ซ้าย) */}
         <Link className="navbar-brand ef-brand" href="/" aria-label="Home">
-          RHODES <span>ISLAND</span>
+          <span>Blue Archrive</span>
         </Link>
 
-        {/* toggler (ไปขวาอัตโนมัติบน mobile) */}
+        {/* toggler */}
         <button
           className="navbar-toggler ef-toggler ms-auto"
           type="button"
@@ -93,7 +107,7 @@ export default function Navigation() {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* กลุ่มเมนู + ปุ่ม (ขวา) */}
+        {/* เมนู (ขวา) */}
         <div className="collapse navbar-collapse ef-collapse ms-lg-auto" id="navbarSupportedContent">
           <ul className="navbar-nav ef-menu ms-lg-auto mb-2 mb-lg-0">
             {items.map((item) => {

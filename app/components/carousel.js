@@ -6,25 +6,24 @@ export default function EndfieldCarousel() {
   const slides = useMemo(() => ([
     {
       id: 1,
-      title: 'Arknights: Endfield Special Trailer | Endfield: Those Who Stayed',
+      title: 'Arknights: Endfield - Gameplay Trailer | gamescom 2025',
       kind: 'video',
-      video: 'https://www.youtube.com/embed/6CGS_C6XqG8?rel=0',
-      image: '/images/endfield/slide-1.jpg',
-      thumb: '/images/endfield/thumb-1.jpg',
+      video: 'https://www.youtube.com/embed/gDXP3Jr02BA?si=XLeMYoBlbcUPut-u',
+      thumb: '/images/sliders/hq720.jpg',
     },
     {
       id: 2,
-      title: 'Gameplay Preview — Over the Frontline',
-      kind: 'image',
-      image: '/images/endfield/slide-2.jpg',
-      thumb: '/images/endfield/thumb-2.jpg',
+      title: 'Arknights: Endfield Gameplay Demo 03',
+      kind: 'video',
+      video: 'https://www.youtube.com/embed/UbMmSdOJ1Ho?si=XJ18XBhIQisyAhhg',
+      thumb: '/images/sliders/pv_cover_7_en_us.jpg',
     },
     {
       id: 3,
-      title: 'Operators Briefing — Mission S-16',
-      kind: 'image',
-      image: '/images/endfield/slide-3.jpg',
-      thumb: '/images/endfield/thumb-3.jpg',
+      title: 'Arknights: Endfield Special Trailer | Endfield: Those Who Stayed',
+      kind: 'video',
+      video: 'https://www.youtube.com/embed/H-rls7leIX8?si=KTLy1AYw_eiRZbl1',
+      thumb: '/images/sliders/pv_cover_8_en_us_b9ySzeGjuKfQbSOl.png',
     },
   ]), []);
 
