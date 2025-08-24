@@ -129,27 +129,7 @@ export default function ServicePage() {
     };
   }, []);
 
-  /* ----------------- เส้นปะ + พารัลแลกซ์ภาพตอนสกอลล์ ----------------- */
-  useEffect(() => {
-    const frame = mediaRef.current;
-    if (!frame) return;
-    const line = frame.querySelector('.media-line');
-    const onScroll = () => {
-      const r = frame.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // progress 0..1
-      const prog = Math.max(0, Math.min(1, 1 - (r.top + r.height * 0.2) / (vh + r.height * 0.2)));
-      frame.style.setProperty('--imv', String(prog));
-      if (line) line.style.backgroundPosition = `${-window.scrollY}px 0`;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    onScroll();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [tab]);
+
 
   /* ----------------- 3D tilt สำหรับรูป + swap animation ตอนเปลี่ยนแท็บ ----------------- */
   useEffect(() => {

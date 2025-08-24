@@ -66,7 +66,7 @@ export default function EndfieldProfileCard() {
         .eyebrow{ font-size:12px; letter-spacing:.24em; color:#444; opacity:.85; margin-bottom:6px; }
         .title{
           font-weight:900; font-size: clamp(22px, 3vw, 38px); margin:0 0 10px;
-          padding-bottom:10px; border-bottom: 4px solid var(--yl,#ffe500);
+          padding-bottom:10px; border-bottom: 4px solid var(--bl,#02D3FB);
         }
 
         .meta{ display:flex; gap:18px; flex-wrap:wrap; margin: 10px 0 10px; }

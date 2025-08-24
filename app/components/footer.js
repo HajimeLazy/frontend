@@ -18,13 +18,13 @@ export default function Footer() {
         {/* โลโก้/เวิร์ดมาร์กกลาง (ถ้ามีไฟล์โลโก้จริง ให้ใช้ <img> แทน span ได้เลย) */}
         <div className="brand">
           {/* <img src="/images/gryphline.svg" alt="GRYPHLINE" /> */}
-          <span className="wordmark">GRYPHLINE</span>
-          <span className="tag">GRYPH FRONTIER PTE. LTD.</span>
+          <span className="wordmark">Nexon</span>
+          <span className="tag">Blue Archrive</span>
         </div>
 
         {/* ลิขสิทธิ์ */}
         <div className="copy">
-          Copyright © 2022 - {year} GRYPHLINE. All Rights Reserved.
+          © 2025 NEXON (Thailand) Co., Ltd. All Rights Reserved.
         </div>
       </div>
 
