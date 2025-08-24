@@ -6,28 +6,18 @@ export default function EndfieldProfileCard() {
     <div className="ef-profile">
       {/* ซ้าย: เนื้อหา/แท็ก */}
       <div className="left">
-        <div className="eyebrow">/// ARKNIGHTS: ENDFIELD</div>
-        <h2 className="title">[ Endministrator ]</h2>
-
-        <div className="meta">
-          <div className="group">
-            <span className="label">FACTION</span>
-            <span className="pill">Endfield Industries</span>
-          </div>
-          <div className="group">
-            <span className="label">RACE</span>
-            <span className="pill">[data_missing]</span>
-          </div>
-        </div>
+        <div className="eyebrow">/// Blue archrive </div>
+        <h2 className="title">[ Schale ]</h2>
 
         <div className="copy">
           <p>
-            Other factions within the Civilization Band are well aware that Endfield
-            has a very special trump card in their hand, but that is all they know.
+            Independent Federal Investigation Club
           </p>
           <p>
-            The Endministrator's mysterious mastery over Originium and the Protocol network,
-            along with the Endmin's need for periodic long-term hibernation, is one of Endfield's most important secrets.
+            S.C.H.A.L.E (連邦捜査部 S.C.H.A.L.E), or simply SCHALE (シャーレ), is an extrajudicial, autonomous organization founded by the mysterious General Student Council President prior to her disappearance.
+          </p>
+          <p>
+            This is where Sensei works.
           </p>
         </div>
 
@@ -46,7 +36,7 @@ export default function EndfieldProfileCard() {
       <div className="right">
         <div className="hero">
           <Image
-            src="/images/sliders/Endministrator.webp"
+            src="/images/sliders/SCHALE.jpg"
             alt="Endministrator"
             fill
             priority
@@ -121,7 +111,7 @@ export default function EndfieldProfileCard() {
 }
 
 const MINIS = [
-  { t:'01 / Endministrator', img:'/images/sliders/Endministrator.webp' },
-  { t:'02 / Endministrator',         img:'/images/sliders/41903-2128533063.png' },
-  { t:'03 /perlica',          img:'/images/sliders/perlica-assets-info-from-website-v0-6omzyh2vfaxb1.webp' },
+  { t:'01 / Sensei', img:'/images/sliders/sensei2.webp' },
+  { t:'02 / Arona',         img:'/images/sliders/Arona.webp' },
+  { t:'03 /Plana',          img:'/images/sliders/Plana.webp' },
 ];
