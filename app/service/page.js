@@ -196,9 +196,9 @@ export default function ServicePage() {
           <div className="topo">Blue Archive</div>
         </div>
 
-        <h1 className="hero-title" data-r="2">Gameplay Service</h1>
+        <h1 className="hero-title" data-r="2">Gameplay & Service</h1>
         <p className="hero-sub" data-r="3">
-          แนะแนวการเล่น • ระบบฐาน • ชมรม • เนื้อเรื่อง • เคล็ดลับบอส
+          แนะแนวการเล่น • ระบบฐาน • ชมรม • เนื้อเรื่อง • วีดิโอแนะนำ
         </p>
 
         <div className="cta-row" data-r="4">

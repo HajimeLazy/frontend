@@ -30,10 +30,9 @@ export default function EndfieldProfileCard() {
         <div className="copy" role="doc-introduction">
           <p><strong>Independent Federal Investigation Club</strong></p>
           <p>
-            S.C.H.A.L.E (連邦捜査部 S.C.H.A.L.E), or simply SCHALE (シャーレ), is an extrajudicial,
-            autonomous organization founded by the mysterious General Student Council President prior to her disappearance.
+            ชมรมสืบสวนกลางอิสระ SCHALE (連邦捜査部 SCHALE ) หรือเรียกง่ายๆ ว่าSCHALE (シャーレ)เป็นองค์กรวิสามัญฆาตกรรมและเป็นอิสระที่ก่อตั้งโดยประธานสภานักเรียนทั่วไป ผู้ลึกลับ ก่อนที่เธอจะหายตัวไป
           </p>
-          <p>This is where Sensei works.</p>
+          <p>และที่นี่คือที่ที่เซนเซย์หรือคุณครูทำงาน</p>
         </div>
 
         {/* แกลเลอรีล่าง */}
