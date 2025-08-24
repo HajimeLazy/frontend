@@ -480,6 +480,17 @@
 }
 .btn-yl:hover {
   filter: brightness(1.04);
+  /* กล่อง YouTube ทำงานเป็นพื้นหลัง (cover เหมือน object-fit: cover) */
+.ef-hero-yt{
+  position:absolute; inset:0; z-index:-3; pointer-events:none; overflow:hidden;
+}
+.ef-hero-yt iframe{
+  position:absolute; border:0;
+  /* กลยุทธ์ cover: ให้ iframe กินจอเสมอ */
+  width:100vw; height:56.25vw;                /* 16:9 จากความกว้าง */
+  min-width:177.78vh; min-height:100vh;       /* 16:9 จากความสูง */
+  left:50%; top:50%; transform:translate(-50%,-50%) scale(1.02); /* กันขอบดำ */
+}
 } /* ปุ่ม Create Account แบบ ghost + เส้นแสงวิ่ง */
 .btn-ghost {
   position: relative;

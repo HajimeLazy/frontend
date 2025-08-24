@@ -8,7 +8,7 @@ export default function AboutPage() {
     nameTh: 'กิตติคุณ ชูบุญ 001',
     role: 'นักศึกษา IT | Frontend Dev | Graphic',
     tagline: 'ชอบทำเว็บธีมเกม/อนิเมะแนว Neon-UI, สนุกกับการออกแบบ UX ที่ลื่นไหล',
-    avatar: '/images/sliders/Profile.jfif', // เปลี่ยนเป็นรูปตัวเอง/โลโก้
+    avatar: '/images/sliders/Profile.jpg', // เปลี่ยนเป็นรูปตัวเอง/โลโก้
     location: 'เชียงใหม่, ไทย',
     email: 'tatath214@gmail.com',
     phone: '088-253-0818',
