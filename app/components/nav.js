@@ -42,35 +42,45 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSignOut = async () => {
-    const res = await Swal.fire({
-      title: "ออกจากระบบ?",
-      text: "คุณต้องการออกจากระบบหรือไม่",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "ออกจากระบบ",
-      cancelButtonText: "ยกเลิก",
-      confirmButtonColor: "#02D3FB",
-      background: "#fff",
-      color: "#111",
-    });
-    if (!res.isConfirmed) return;
+const handleSignOut = async () => {
+  const res = await Swal.fire({
+    title: "ออกจากระบบ?",
+    text: "คุณต้องการออกจากระบบหรือไม่",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "ออกจากระบบ",
+    cancelButtonText: "ยกเลิก",
+    confirmButtonColor: "#02D3FB",
+    background: "#fff",
+    color: "#111",
+  });
+  if (!res.isConfirmed) return;
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    setAuthed(false);
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  setAuthed(false);
 
-    await Swal.fire({
-      title: "ออกจากระบบแล้ว",
-      icon: "success",
-      timer: 1200,
-      showConfirmButton: false,
-      background: "#fff",
-      color: "#111",
-    });
+  // แจ้งเตือนสั้น ๆ แล้วไป login ทันที
+  Swal.fire({
+    title: "ออกจากระบบแล้ว",
+    icon: "success",
+    timer: 900,
+    showConfirmButton: false,
+    background: "#fff",
+    color: "#111",
+  });
 
-    router.push(pathname?.startsWith("/admin") ? "/admin/login" : "/login");
-  };
+  // เด้งไปหน้า /login เสมอ (กันหลงไป /admin/login แล้ว 404)
+  router.replace("/login");
+
+  // กันกรณี router ไม่ยอมเปลี่ยนหน้า (เช่น state เพี้ยนตอน dev)
+  setTimeout(() => {
+    if (window.location.pathname !== "/login") {
+      window.location.assign("/login");
+    }
+  }, 0);
+};
+
 
   const items = [
     { name: "Home", href: "/" },
