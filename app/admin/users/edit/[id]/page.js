@@ -112,52 +112,88 @@ export default function Page() {
     setPassword(initialUser.password || '')
   }
 
-  const handleUpdateSubmit = async (e) => {
-    e.preventDefault()
-    setSubmitting(true)
-    try {
-      // ✅ PUT ไปที่ /api/users (ตามที่ให้มา) โดยส่ง id ใน body
-      const res = await fetch(USERS_API, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id, firstname, fullname, lastname, username,
-          address, sex, birthday, password
-        })
-      })
+const handleUpdateSubmit = async (e) => {
+  e.preventDefault();
+  if (!id) return;
 
-      const result = await res.json().catch(() => ({}))
-      if (res.ok) {
-        await Swal.fire({
-          icon: 'success',
-          title: '<h3>ปรับปรุงข้อมูลเรียบร้อยแล้ว</h3>',
-          showConfirmButton: false,
-          timer: 1600
-        })
-        router.push('/register')
+  setSubmitting(true);
+
+  // ส่งเฉพาะฟิลด์ที่ BE รองรับ (ตามตัวอย่างอาจารย์)
+  const payload = {
+    id: Number(id),           // แปลงเป็นตัวเลข เผื่อ BE คาดหมาย number
+    firstname,
+    fullname,
+    lastname,
+    username,
+    password,
+  };
+
+  // helper: ยิง request แบบเลือกใส่ Content-Type ได้ (บาง BE ไม่ชอบ preflight)
+  const tryRequest = async (withJSONHeader) => {
+    const headers = withJSONHeader
+      ? { Accept: 'application/json', 'Content-Type': 'application/json' }
+      : { Accept: 'application/json' };
+
+    const res = await fetch(USERS_API, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(payload),
+      cache: 'no-store',
+      mode: 'cors',
+    });
+
+    const ct = res.headers.get('content-type') || '';
+    const data = ct.includes('application/json')
+      ? await res.json().catch(() => ({}))
+      : await res.text().catch(() => '');
+
+    return { res, data };
+  };
+
+  try {
+    // ยิงแบบไม่ใส่ Content-Type ก่อน (หลบ preflight/CORS)
+    let { res, data } = await tryRequest(false);
+
+    // ถ้าไม่ผ่าน ลองซ้ำอีกรอบด้วย Content-Type: application/json
+    if (!res.ok) {
+      const retry = await tryRequest(true);
+      if (retry.res.ok) {
+        res = retry.res;
+        data = retry.data;
       } else {
-        console.error('Update failed:', result)
-        Swal.fire({
-          title: 'Error!',
-          text: result?.message || 'เกิดข้อผิดพลาด!',
+        console.error('Update failed:', retry.res.status, retry.res.statusText, retry.data);
+        await Swal.fire({
+          title: 'อัปเดตไม่สำเร็จ',
+          text: typeof retry.data === 'string'
+            ? retry.data
+            : (retry.data?.message || `HTTP ${retry.res.status}`),
           icon: 'error',
-          confirmButtonText: 'ตกลง'
-        })
+        });
+        setSubmitting(false);
+        return;
       }
-    } catch (error) {
-      console.error(error)
-      Swal.fire({
-        icon: 'error',
-        title: 'ข้อผิดพลาดเครือข่าย',
-        text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-      })
-    } finally {
-      setSubmitting(false)
     }
+
+    await Swal.fire({
+      icon: 'success',
+      title: '<h3>ปรับปรุงข้อมูลเรียบร้อยแล้ว</h3>',
+      showConfirmButton: false,
+      timer: 1600,
+    });
+
+    // กลับหน้ารายการผู้ใช้ให้สอดคล้องกับปุ่ม "ย้อนกลับ"
+    router.push('/admin/users');
+  } catch (error) {
+    console.error('Update error:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'ข้อผิดพลาดเครือข่าย',
+      text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
+    });
+  } finally {
+    setSubmitting(false);
   }
+};
 
   // --- UI ---
   if (loading) {
