@@ -37,8 +37,8 @@ const geistMono = Geist_Mono({
 
 // Metadata หน้าเว็บ
 export const metadata = {
-  title: "Rhodes Island",
-  description: "ระบบธีม Arknights โดย 010 โชติกร",
+  title: "BlueArchive",
+  description: "ระบบ UI 001 กิตติคุณ",
 };
 
 // Layout หลักของเว็บไซต์
