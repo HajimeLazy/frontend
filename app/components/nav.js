@@ -84,9 +84,9 @@ const handleSignOut = async () => {
 
   const items = [
     { name: "Home", href: "/" },
-    { name: "Service", href: "/service" },
-    { name: "Contact", href: "/contact" },
-    { name: "About", href: "/about" },
+    { name: "About", href: "/service" },
+    { name: "Service", href: "/contact" },
+    { name: "Contact", href: "/about" },
     { name: "เข้าสู่ระบบ", href: "/login" }, // เรนเดอร์เสมอ แต่ค่อยซ่อนหลัง mount ถ้า authed
   ];
 

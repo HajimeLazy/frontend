@@ -18,7 +18,7 @@ export default function ContactPage() {
   return (
     <div className="ba-shell">
       <header className="ba-hero">
-        <h1>About & Contact</h1>
+        <h1>Service & Contact</h1>
         <p className="sub">แฟนไซต์ Blue Archive • คำแนะนำ ติดต่อ และข้อเสนอแนะ</p>
       </header>
 
