@@ -18,6 +18,23 @@ function toInputDate(v) {
   return v.slice(0, 10)
 }
 
+// แปลงจาก input YYYY-MM-DD -> รูปแบบเดิมของ BE (ถ้าเดิมเป็น DD/MM/YYYY หรือปี พ.ศ.)
+function toApiDate(inputYYYYMMDD, originalFromApi) {
+  if (!inputYYYYMMDD) return ''
+  const isSlash = typeof originalFromApi === 'string' && originalFromApi.includes('/')
+  if (!isSlash) return inputYYYYMMDD
+
+  const [y, m, d] = inputYYYYMMDD.split('-') // YYYY-MM-DD
+  const origYear = parseInt(String(originalFromApi).split('/')[2], 10)
+  let year = parseInt(y, 10)
+
+  // ถ้าเดิมเป็น พ.ศ. (>2400) ให้ +543 กลับก่อนส่ง
+  if (!Number.isNaN(origYear) && origYear > 2400 && year < 2400) {
+    year += 543
+  }
+  return `${d}/${m}/${String(year).padStart(4, '0')}` // DD/MM/YYYY หรือ DD/MM/พ.ศ.
+}
+
 export default function Page() {
   const router = useRouter()
   const { id } = useParams()
@@ -112,88 +129,94 @@ export default function Page() {
     setPassword(initialUser.password || '')
   }
 
-const handleUpdateSubmit = async (e) => {
-  e.preventDefault();
-  if (!id) return;
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault()
+    if (!id) return
 
-  setSubmitting(true);
+    setSubmitting(true)
 
-  // ส่งเฉพาะฟิลด์ที่ BE รองรับ (ตามตัวอย่างอาจารย์)
-  const payload = {
-    id: Number(id),           // แปลงเป็นตัวเลข เผื่อ BE คาดหมาย number
-    firstname,
-    fullname,
-    lastname,
-    username,
-    password,
-  };
+    // ✅ แปลงวันเกิดกลับเป็นรูปแบบเดิมของ BE (ถ้าเดิมเป็นแบบมี '/')
+    const birthdayForApi = toApiDate(birthday, initialUser?.birthday)
 
-  // helper: ยิง request แบบเลือกใส่ Content-Type ได้ (บาง BE ไม่ชอบ preflight)
-  const tryRequest = async (withJSONHeader) => {
-    const headers = withJSONHeader
-      ? { Accept: 'application/json', 'Content-Type': 'application/json' }
-      : { Accept: 'application/json' };
-
-    const res = await fetch(USERS_API, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify(payload),
-      cache: 'no-store',
-      mode: 'cors',
-    });
-
-    const ct = res.headers.get('content-type') || '';
-    const data = ct.includes('application/json')
-      ? await res.json().catch(() => ({}))
-      : await res.text().catch(() => '');
-
-    return { res, data };
-  };
-
-  try {
-    // ยิงแบบไม่ใส่ Content-Type ก่อน (หลบ preflight/CORS)
-    let { res, data } = await tryRequest(false);
-
-    // ถ้าไม่ผ่าน ลองซ้ำอีกรอบด้วย Content-Type: application/json
-    if (!res.ok) {
-      const retry = await tryRequest(true);
-      if (retry.res.ok) {
-        res = retry.res;
-        data = retry.data;
-      } else {
-        console.error('Update failed:', retry.res.status, retry.res.statusText, retry.data);
-        await Swal.fire({
-          title: 'อัปเดตไม่สำเร็จ',
-          text: typeof retry.data === 'string'
-            ? retry.data
-            : (retry.data?.message || `HTTP ${retry.res.status}`),
-          icon: 'error',
-        });
-        setSubmitting(false);
-        return;
-      }
+    // ✅ ส่งทุกฟิลด์ที่ต้องการเก็บ ไม่อย่างนั้น BE อาจเคลียร์ค่าเดิมทิ้ง
+    const payload = {
+      id: Number(id),   // เผื่อ BE ต้องการ number
+      firstname,
+      fullname,
+      lastname,
+      username,
+      password,
+      address,
+      sex,
+      birthday: birthdayForApi,
     }
 
-    await Swal.fire({
-      icon: 'success',
-      title: '<h3>ปรับปรุงข้อมูลเรียบร้อยแล้ว</h3>',
-      showConfirmButton: false,
-      timer: 1600,
-    });
+    // helper: ยิง request แบบเลือกใส่ Content-Type ได้ (บาง BE ไม่ชอบ preflight)
+    const tryRequest = async (withJSONHeader) => {
+      const headers = withJSONHeader
+        ? { Accept: 'application/json', 'Content-Type': 'application/json' }
+        : { Accept: 'application/json' }
 
-    // กลับหน้ารายการผู้ใช้ให้สอดคล้องกับปุ่ม "ย้อนกลับ"
-    router.push('/admin/users');
-  } catch (error) {
-    console.error('Update error:', error);
-    Swal.fire({
-      icon: 'error',
-      title: 'ข้อผิดพลาดเครือข่าย',
-      text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-    });
-  } finally {
-    setSubmitting(false);
+      const res = await fetch(USERS_API, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(payload),
+        cache: 'no-store',
+        mode: 'cors',
+      })
+
+      const ct = res.headers.get('content-type') || ''
+      const data = ct.includes('application/json')
+        ? await res.json().catch(() => ({}))
+        : await res.text().catch(() => '')
+
+      return { res, data }
+    }
+
+    try {
+      // ยิงแบบไม่ใส่ Content-Type ก่อน (หลบ preflight/CORS)
+      let { res, data } = await tryRequest(false)
+
+      // ถ้าไม่ผ่าน ลองซ้ำอีกรอบด้วย Content-Type: application/json
+      if (!res.ok) {
+        const retry = await tryRequest(true)
+        if (retry.res.ok) {
+          res = retry.res
+          data = retry.data
+        } else {
+          console.error('Update failed:', retry.res.status, retry.res.statusText, retry.data)
+          await Swal.fire({
+            title: 'อัปเดตไม่สำเร็จ',
+            text: typeof retry.data === 'string'
+              ? retry.data
+              : (retry.data?.message || `HTTP ${retry.res.status}`),
+            icon: 'error',
+          })
+          setSubmitting(false)
+          return
+        }
+      }
+
+      await Swal.fire({
+        icon: 'success',
+        title: '<h3>ปรับปรุงข้อมูลเรียบร้อยแล้ว</h3>',
+        showConfirmButton: false,
+        timer: 1600,
+      })
+
+      // กลับหน้ารายการผู้ใช้ให้สอดคล้องกับปุ่ม "ย้อนกลับ"
+      router.push('/admin/users')
+    } catch (error) {
+      console.error('Update error:', error)
+      Swal.fire({
+        icon: 'error',
+        title: 'ข้อผิดพลาดเครือข่าย',
+        text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
+      })
+    } finally {
+      setSubmitting(false)
+    }
   }
-};
 
   // --- UI ---
   if (loading) {
@@ -418,7 +441,7 @@ h1{ font-size:20px; margin:0; color:var(--ink) }
 }
 .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,0,0,.08) }
 .btn:disabled{ opacity:.55; cursor:not-allowed }
-.btn.ghost{ background: rgba(255,255,255,.86) } /* ขาวโปร่ง ไม่อมเขียว */
+.btn.ghost{ background: rgba(255,255,255,.86) } /* ขาวโปร่ง */
 .btn.small{ padding:8px 10px; border-radius:10px; font-size:12px }
 .btn.primary{
   border-color:transparent; color:#0f172a;
